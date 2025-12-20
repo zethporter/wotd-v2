@@ -1,5 +1,4 @@
-import { IconSend } from '@tabler/icons-react'
-import { Badge } from './ui/badge'
+import { IconHeartFilled } from '@tabler/icons-react'
 import { Button } from './ui/button'
 import {
   Item,
@@ -15,7 +14,7 @@ export const VoteCard = ({
   setVotee,
 }: {
   wrestler: WrestlerInsert
-  setVotee: (id: string) => void
+  setVotee: (id: WrestlerInsert) => void
 }) => {
   return (
     <Item variant="outline">
@@ -25,11 +24,12 @@ export const VoteCard = ({
       </ItemContent>
       <ItemActions>
         <Button
+          type="button"
           variant="outline"
           size="icon-lg"
-          onClick={() => setVotee(wrestler.id)}
+          onClick={() => setVotee(wrestler)}
         >
-          <IconSend />
+          <IconHeartFilled />
         </Button>
       </ItemActions>
     </Item>

@@ -6,6 +6,7 @@ import appCss from '../styles.css?url'
 
 import { ThemeProvider } from '@/components/theme-provider'
 import { FingerprintProvider } from '@/components/fingerprint-provider'
+import { Toaster } from '@/components/ui/sonner'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -58,6 +59,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             />
             <Scripts />
           </body>
+          <Toaster />
         </FingerprintProvider>
       </ThemeProvider>
     </html>

@@ -1,4 +1,4 @@
-import { asc, eq, gt, or, sql } from 'drizzle-orm'
+import { asc, desc, eq, gt, or, sql } from 'drizzle-orm'
 import { createServerFn } from '@tanstack/react-start'
 import { v7 as uuid } from 'uuid'
 import pino from 'pino'
@@ -227,3 +227,32 @@ export const deleteAllWrestlers = createServerFn({ method: 'POST' }).handler(
     }
   },
 )
+
+export const getWrestlersWithVoteCounts = createServerFn({
+  method: 'GET',
+}).handler(async () => {
+  logger.info({ message: 'Getting Wrestlers with Vote Counts' })
+
+  const result = await db
+    .select({
+      id: wrestlersTable.id,
+      name: wrestlersTable.name,
+      school: wrestlersTable.school,
+      voteCount: sql<number>`COALESCE(COUNT(${votesTable.id}), 0)`,
+    })
+    .from(wrestlersTable)
+    .leftJoin(votesTable, eq(wrestlersTable.id, votesTable.wrestlerId))
+    .groupBy(wrestlersTable.id, wrestlersTable.name, wrestlersTable.school)
+    .orderBy(desc(sql`COALESCE(COUNT(${votesTable.id}), 0)`))
+    .execute()
+
+  const totalVotes = result.reduce(
+    (sum, wrestler) => sum + wrestler.voteCount,
+    0,
+  )
+
+  return {
+    data: result,
+    totalVotes,
+  }
+})
