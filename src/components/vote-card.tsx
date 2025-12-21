@@ -29,7 +29,7 @@ export const VoteCard = ({
           size="icon-lg"
           onClick={() => setVotee(wrestler)}
         >
-          <IconHeartFilled />
+          <IconHeartFilled className="fill-primary" />
         </Button>
       </ItemActions>
     </Item>

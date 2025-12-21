@@ -13,7 +13,6 @@ import type { WrestlerInsert } from '@/db/schema/app'
 import { getAllWrestlers, submitVote } from '@/serverFunctions/tursoFunctions'
 import { useFingerprint } from '@/components/fingerprint-provider'
 import { VoteCard } from '@/components/vote-card'
-import { ProgressiveBlur } from '@/components/ui/progressive-blur'
 import {
   Dialog,
   DialogClose,
@@ -61,9 +60,9 @@ function RouteContent() {
         setVoteStatus('submitted')
       } else {
         setVoteStatus('error')
+        toast.error(res.message)
       }
     }
-    toast.error('Something went wrong. Please refresh and try again')
   }
 
   switch (voteStatus) {
@@ -73,10 +72,10 @@ function RouteContent() {
           initial={{ x: 300, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -300, opacity: 0 }}
-          className="h-screen flex flex-col p-4 gap-4 overflow-hidden"
+          className="flex flex-col p-4 gap-4 overflow-hidden"
         >
           <VoteSearch value={search} search={setSearch} />
-          <div className="grow overflow-auto pt-10 pb-32">
+          <div className="grow overflow-auto py-10">
             <div className="flex w-full max-w-md flex-col gap-4 mx-auto">
               {data
                 .filter(
@@ -96,7 +95,6 @@ function RouteContent() {
                   />
                 ))}
             </div>
-            <ProgressiveBlur height="25%" position="bottom" />
           </div>
           <Dialog open={!!votee} onOpenChange={() => setVotee(null)}>
             <DialogPortal>
@@ -145,13 +143,6 @@ function RouteContent() {
             </span>
             <span>Submitting Vote</span>
           </div>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setVoteStatus('submitted')}
-          >
-            Confirm
-          </Button>
         </motion.div>
       )
     case 'submitted':
@@ -168,13 +159,6 @@ function RouteContent() {
             </span>
             <span>Thanks For Voting!</span>
           </div>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setVoteStatus('error')}
-          >
-            Confirm
-          </Button>
         </motion.div>
       )
     case 'error':

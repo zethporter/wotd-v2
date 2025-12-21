@@ -20,7 +20,6 @@ export function VoteSearch({
         value={value}
         onChange={(e) => search(e.target.value)}
         placeholder="Search..."
-        className="bg-primary"
       />
       <InputGroupAddon>
         <IconSearch />

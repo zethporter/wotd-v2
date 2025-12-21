@@ -68,6 +68,8 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from '@/components/ui/input-group'
+import { adminMiddleware } from '@/middleware/auth'
+import { User } from '@/components/user-management'
 
 export const Route = createFileRoute('/manage')({
   loader: async () => {
@@ -75,6 +77,9 @@ export const Route = createFileRoute('/manage')({
     return { wrestlers: result.data, totalVotes: result.totalVotes }
   },
   component: RouteComponent,
+  server: {
+    middleware: [adminMiddleware],
+  },
 })
 
 type WrestlerWithVoteCount = {
@@ -224,14 +229,18 @@ function RouteComponent() {
 
   return (
     <div className="container mx-auto py-8">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">Manage Wrestlers</h1>
-        <p className="text-muted-foreground mt-1">
-          View and manage all wrestlers and their votes
-        </p>
-        <p className="text-sm text-muted-foreground mt-2">
-          Total votes: <span className="font-semibold">{totalVotes}</span>
-        </p>
+      <div className="flex flex-row justify-between gap-2 items-start">
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold">Manage Wrestlers</h1>
+          <p className="text-muted-foreground mt-1">
+            View and manage all wrestlers and their votes
+          </p>
+          <p className="text-sm text-muted-foreground mt-2">
+            Total votes: <span className="font-semibold">{totalVotes}</span>
+          </p>
+        </div>
+
+        <User />
       </div>
 
       <div className="flex flex-row justify-between gap-2 py-4">

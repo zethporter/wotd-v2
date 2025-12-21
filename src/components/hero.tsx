@@ -1,11 +1,15 @@
 import { Link } from '@tanstack/react-router'
 import { IconSend } from '@tabler/icons-react'
+import { User } from './user-management'
 import { Button } from '@/components/ui/button'
 import { AuroraText } from '@/components/ui/aurora-text'
 
 export const Hero = () => {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">
+      <div className="fixed top-2 right-2">
+        <User />
+      </div>
       <div className="min-h-screen relative">
         <div className="text-center flex flex-col gap-6 justify-start pt-56">
           <h1 className="text-4xl font-bold flex flex-col gap-2">
