@@ -1,10 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import {
-  getWrestlersWithVoteCounts,
-  deleteWrestler,
-  updateWrestler,
-} from '@/serverFunctions/tursoFunctions'
-import {
   useReactTable,
   getCoreRowModel,
   getPaginationRowModel,
@@ -14,6 +9,11 @@ import {
   type PaginationState,
 } from '@tanstack/react-table'
 import { useState } from 'react'
+import {
+  getWrestlersWithVoteCounts,
+  deleteWrestler,
+  updateWrestler,
+} from '@/serverFunctions/tursoFunctions'
 import {
   Table,
   TableBody,
@@ -59,6 +59,15 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { IconDotsVertical, IconSearch } from '@tabler/icons-react'
 import { toast } from 'sonner'
+import {
+  AddSingleWrestler,
+  WrestlersUpload,
+} from '@/components/wrestler-upload'
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from '@/components/ui/input-group'
 
 export const Route = createFileRoute('/manage')({
   loader: async () => {
@@ -225,16 +234,22 @@ function RouteComponent() {
         </p>
       </div>
 
-      {/* Search */}
-      <div className="mb-4">
-        <div className="relative max-w-sm">
-          <IconSearch className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-          <Input
-            placeholder="Search by name or school..."
+      <div className="flex flex-row justify-between gap-2 py-4">
+        {/* Search */}
+        <InputGroup className="max-w-2xl self-center">
+          <InputGroupInput
             value={globalFilter}
             onChange={(e) => setGlobalFilter(e.target.value)}
             className="pl-8"
+            placeholder="Search Name or School"
           />
+          <InputGroupAddon>
+            <IconSearch />
+          </InputGroupAddon>
+        </InputGroup>
+        <div className="flex flex-row gap-2 justify-between">
+          <AddSingleWrestler />
+          <WrestlersUpload />
         </div>
       </div>
 
