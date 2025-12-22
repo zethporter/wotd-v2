@@ -4,6 +4,10 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import appCss from '../styles.css?url'
 
+import { ThemeProvider } from '@/components/theme-provider'
+import { FingerprintProvider } from '@/components/fingerprint-provider'
+import { Toaster } from '@/components/ui/sonner'
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -15,7 +19,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Starter',
+        title: 'Trojan Takedown',
       },
     ],
     links: [
@@ -35,21 +39,29 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
-        {children}
-        <TanStackDevtools
-          config={{
-            position: 'bottom-right',
-          }}
-          plugins={[
-            {
-              name: 'Tanstack Router',
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
-        <Scripts />
-      </body>
+      <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+        <FingerprintProvider
+          defaultFingerprint={null}
+          storageKey="calculated-fingerprint"
+        >
+          <body>
+            {children}
+            <TanStackDevtools
+              config={{
+                position: 'bottom-right',
+              }}
+              plugins={[
+                {
+                  name: 'Tanstack Router',
+                  render: <TanStackRouterDevtoolsPanel />,
+                },
+              ]}
+            />
+            <Scripts />
+          </body>
+          <Toaster />
+        </FingerprintProvider>
+      </ThemeProvider>
     </html>
   )
 }
