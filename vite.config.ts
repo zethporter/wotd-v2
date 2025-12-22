@@ -9,14 +9,7 @@ import { nitro } from 'nitro/vite'
 const config = defineConfig({
   plugins: [
     devtools(),
-    nitro({
-      preset: 'vercel',
-      vercel: {
-        functions: {
-          runtime: 'nodejs22.x',
-        },
-      },
-    }),
+    nitro(),
     // this is the plugin that enables path aliases
     viteTsConfigPaths({
       projects: ['./tsconfig.json'],
