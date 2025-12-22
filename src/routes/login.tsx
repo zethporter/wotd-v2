@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -7,18 +8,19 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { signIn } from '@/lib/auth/auth-client'
+// import { signIn } from '@/lib/auth/auth-client'
 
 export const Route = createFileRoute('/login')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const handleGoogleSignIn = async () => {
-    await signIn.social({
-      provider: 'google',
-      callbackURL: '/manage',
-    })
+  const handleGoogleSignIn = () => {
+    toast.warning('Cannot Log in currently')
+    // await signIn.social({
+    //   provider: 'google',
+    //   callbackURL: '/manage',
+    // })
   }
 
   return (

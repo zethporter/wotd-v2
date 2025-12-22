@@ -13,7 +13,6 @@ import { Route as VoteRouteImport } from './routes/vote'
 import { Route as ManageRouteImport } from './routes/manage'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const VoteRoute = VoteRouteImport.update({
   id: '/vote',
@@ -35,25 +34,18 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/manage': typeof ManageRoute
   '/vote': typeof VoteRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/manage': typeof ManageRoute
   '/vote': typeof VoteRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,14 +53,13 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/manage': typeof ManageRoute
   '/vote': typeof VoteRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/manage' | '/vote' | '/api/auth/$'
+  fullPaths: '/' | '/login' | '/manage' | '/vote'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/manage' | '/vote' | '/api/auth/$'
-  id: '__root__' | '/' | '/login' | '/manage' | '/vote' | '/api/auth/$'
+  to: '/' | '/login' | '/manage' | '/vote'
+  id: '__root__' | '/' | '/login' | '/manage' | '/vote'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,7 +67,6 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   ManageRoute: typeof ManageRoute
   VoteRoute: typeof VoteRoute
-  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -109,13 +99,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -124,7 +107,6 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   ManageRoute: ManageRoute,
   VoteRoute: VoteRoute,
-  ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

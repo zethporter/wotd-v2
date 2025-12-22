@@ -68,8 +68,8 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from '@/components/ui/input-group'
-import { adminMiddleware } from '@/middleware/auth'
-import { User } from '@/components/user-management'
+// import { adminMiddleware } from '@/middleware/auth'
+// import { User } from '@/components/user-management'
 
 export const Route = createFileRoute('/manage')({
   loader: async () => {
@@ -78,7 +78,7 @@ export const Route = createFileRoute('/manage')({
   },
   component: RouteComponent,
   server: {
-    middleware: [adminMiddleware],
+    // middleware: [adminMiddleware],
   },
 })
 
@@ -240,7 +240,7 @@ function RouteComponent() {
           </p>
         </div>
 
-        <User />
+        {/* <User />*/}
       </div>
 
       <div className="flex flex-row justify-between gap-2 py-4">

@@ -1,11 +1,11 @@
-import { createAccessControl } from 'better-auth/plugins/access'
+// import { createAccessControl } from 'better-auth/plugins/access'
 
-const manage = {
-  manage: ['create', 'share', 'update', 'delete'],
-} as const
+// const manage = {
+//   manage: ['create', 'share', 'update', 'delete'],
+// } as const
 
-export const ac = createAccessControl(manage)
+// export const ac = createAccessControl(manage)
 
-export const manager = ac.newRole({
-  manage: ['create', 'share', 'update', 'delete'],
-})
+// export const manager = ac.newRole({
+//   manage: ['create', 'share', 'update', 'delete'],
+// })
