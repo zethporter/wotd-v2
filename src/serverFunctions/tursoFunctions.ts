@@ -1,7 +1,6 @@
 import { asc, desc, eq, gt, or, sql } from 'drizzle-orm'
 import { createServerFn } from '@tanstack/react-start'
 import { v7 as uuid } from 'uuid'
-import pino from 'pino'
 import z from 'zod'
 import { db } from '../db/app'
 import {
@@ -13,8 +12,6 @@ import {
 } from '../db/schema/app'
 
 import type { BaseWrestlers, WrestlerUpdate } from '../db/schema/app'
-
-const logger = pino()
 
 type GetWrestlers = {
   cursor: string
@@ -133,7 +130,7 @@ export const updateWrestler = createServerFn({ method: 'POST' })
     try {
       return wrestlerUpdateSchema.parse(data)
     } catch (error) {
-      logger.error(error)
+      console.error(error)
       if (error instanceof z.ZodError) {
         throw new Error(z.prettifyError(error))
       }
@@ -141,7 +138,7 @@ export const updateWrestler = createServerFn({ method: 'POST' })
     }
   })
   .handler(async ({ data }) => {
-    logger.info({ message: 'Updating Wrestler', data })
+    console.info({ message: 'Updating Wrestler', data })
     const updateValues = Object.fromEntries(
       Object.entries(data.newValues).filter(([_, v]) => v != null),
     ) as Partial<typeof wrestlersTable.$inferInsert>
@@ -165,7 +162,7 @@ export const addWrestlers = createServerFn({ method: 'POST' })
     try {
       return baseWrestlersSchema.parse(data)
     } catch (error) {
-      logger.error(error)
+      console.error(error)
       if (error instanceof z.ZodError) {
         throw new Error(z.prettifyError(error))
       }
@@ -173,7 +170,7 @@ export const addWrestlers = createServerFn({ method: 'POST' })
     }
   })
   .handler(async ({ data }) => {
-    logger.info({ message: 'Adding Wrestler', data })
+    console.info({ message: 'Adding Wrestler', data })
     const wrestlers = await db
       .insert(wrestlersTable)
       .values(data)
@@ -197,7 +194,7 @@ export const addWrestlers = createServerFn({ method: 'POST' })
 export const deleteWrestler = createServerFn({ method: 'POST' })
   .inputValidator((data: string) => data)
   .handler(async ({ data }) => {
-    logger.info({ message: 'Deleting Wrestler', data })
+    console.info({ message: 'Deleting Wrestler', data })
     const deleted = await db
       .delete(wrestlersTable)
       .where(eq(wrestlersTable.id, data))
@@ -218,7 +215,7 @@ export const deleteWrestler = createServerFn({ method: 'POST' })
 
 export const deleteAllWrestlers = createServerFn({ method: 'POST' }).handler(
   async () => {
-    logger.info({ message: 'Deleting All Wrestler' })
+    console.info({ message: 'Deleting All Wrestler' })
     await db.delete(wrestlersTable)
 
     return {
@@ -231,7 +228,7 @@ export const deleteAllWrestlers = createServerFn({ method: 'POST' }).handler(
 export const getWrestlersWithVoteCounts = createServerFn({
   method: 'GET',
 }).handler(async () => {
-  logger.info({ message: 'Getting Wrestlers with Vote Counts' })
+  console.info({ message: 'Getting Wrestlers with Vote Counts' })
 
   const result = await db
     .select({
