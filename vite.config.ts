@@ -13,6 +13,9 @@ const config = defineConfig({
       preset: 'vercel',
       rollupConfig: {
         external: ['better-sqlite3'],
+        output: {
+          inlineDynamicImports: true,
+        },
       },
     }),
     viteTsConfigPaths({
