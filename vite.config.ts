@@ -9,8 +9,12 @@ import { nitro } from 'nitro/vite'
 const config = defineConfig({
   plugins: [
     devtools(),
-    nitro(),
-    // this is the plugin that enables path aliases
+    nitro({
+      preset: 'vercel',
+      rollupConfig: {
+        external: ['better-sqlite3'],
+      },
+    }),
     viteTsConfigPaths({
       projects: ['./tsconfig.json'],
     }),
