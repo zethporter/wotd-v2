@@ -1,6 +1,6 @@
 {
-  "short_name": "TanStack App",
-  "name": "Create TanStack App Sample",
+  "short_name": "WOTD",
+  "name": "Wrestler of the day",
   "icons": [
     {
       "src": "favicon.ico",
